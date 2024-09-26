@@ -34,13 +34,15 @@ public class CakeView extends SurfaceView {
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
+    public static final float balloonHeightDiv2 = 85.0f;
+    public static final float balloonWidthDiv2 = 60.0f;
 
     //private instance variable of CakeModel
     private CakeModel myCake;
 
 
     /**
-     * ctor must be overridden here as per standard Java inheritance practice.  We need it
+     * actor must be overridden here as per standard Java inheritance practice.  We need it
      * anyway to initialize the member variables
      */
     public CakeView(Context context, AttributeSet attrs) {
@@ -111,6 +113,8 @@ public class CakeView extends SurfaceView {
      *
      * This method will draw a birthday cake
      */
+
+
     @Override
     public void onDraw(Canvas canvas)
     {
@@ -147,6 +151,16 @@ public class CakeView extends SurfaceView {
 //
 //        //Draw a candle to the right
 //        drawCandle(canvas, cakeLeft + (2 * cakeWidth/3) - (2 * candleWidth/3), cakeTop);
+
+        float cVballoonX = getCakeModel().balloonX;
+        float cVballoonY = getCakeModel().balloonY;
+        if (getCakeModel().balloonDrawn) {
+            canvas.drawOval(cVballoonX - balloonWidthDiv2, cVballoonY - balloonHeightDiv2,
+                    cVballoonX + balloonWidthDiv2, cVballoonY + balloonHeightDiv2,
+                    cakePaint);
+            canvas.drawLine(cVballoonX, cVballoonY + balloonHeightDiv2,
+                    cVballoonX, cVballoonY + balloonHeightDiv2*2, candlePaint);
+        }
 
     }//onDraw
 
