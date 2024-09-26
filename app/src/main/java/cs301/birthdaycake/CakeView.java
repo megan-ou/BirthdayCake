@@ -175,10 +175,7 @@ public class CakeView extends SurfaceView {
                     - i * candleWidth/ (myCake.numCandles + 1), cakeTop);
         }
 
-        //Draw the checkerboard square drawing if user touches the screen
-        if(myCake.touched) {
-            drawSquare(canvas, myCake.squareX, myCake.squareY);
-        }
+
 
 
         canvas.drawText(myCake.touchLoc, 1550,900,textPaint);
@@ -196,6 +193,11 @@ public class CakeView extends SurfaceView {
                     cakePaint);
             canvas.drawLine(cVballoonX, cVballoonY + balloonHeightDiv2,
                     cVballoonX, cVballoonY + balloonHeightDiv2*2, candlePaint);
+        }
+
+        //Draw the checkerboard square drawing if user touches the screen
+        if(myCake.touched) {
+            drawSquare(canvas, myCake.squareX, myCake.squareY);
         }
 
     }//onDraw
