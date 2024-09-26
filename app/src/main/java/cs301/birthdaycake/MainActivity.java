@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         //register CakeController as listener for seek bar
         numCandles.setOnSeekBarChangeListener(cakeController);
+
+        cakeView.setOnTouchListener(cakeController);
     }
 
     public void goodbye(View button) {
