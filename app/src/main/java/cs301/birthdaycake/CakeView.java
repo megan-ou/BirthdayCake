@@ -16,6 +16,7 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint textPaint = new Paint();
     Paint squareLTBtmR = new Paint();
     Paint squareRTBtmL = new Paint();
 
@@ -30,11 +31,14 @@ public class CakeView extends SurfaceView {
     public static final float layerHeight = 200.0f;
     public static final float frostHeight = 50.0f;
     public static final float candleHeight = 300.0f;
+    // made the candleWidth thicker (40.0f --> 90.0f)
     public static final float candleWidth = 90.0f;
     public static final float wickHeight = 30.0f;
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
+    public static final float balloonHeightDiv2 = 85.0f;
+    public static final float balloonWidthDiv2 = 60.0f;
     public static final float squareHeight = 50.0f;
     public static final float squareWidth = 55.0f;
 
@@ -43,7 +47,7 @@ public class CakeView extends SurfaceView {
 
 
     /**
-     * ctor must be overridden here as per standard Java inheritance practice.  We need it
+     * actor must be overridden here as per standard Java inheritance practice.  We need it
      * anyway to initialize the member variables
      */
     public CakeView(Context context, AttributeSet attrs) {
@@ -65,6 +69,9 @@ public class CakeView extends SurfaceView {
         innerFlamePaint.setStyle(Paint.Style.FILL);
         wickPaint.setColor(Color.BLACK);
         wickPaint.setStyle(Paint.Style.FILL);
+        textPaint.setColor(Color.RED);
+        textPaint.setStyle(Paint.Style.FILL);
+        textPaint.setTextSize(56);
         squareLTBtmR.setColor(Color.GREEN);
         squareLTBtmR.setStyle(Paint.Style.FILL);
         squareRTBtmL.setColor(Color.RED);
@@ -134,6 +141,8 @@ public class CakeView extends SurfaceView {
      *
      * This method will draw a birthday cake
      */
+
+
     @Override
     public void onDraw(Canvas canvas)
     {
@@ -171,10 +180,23 @@ public class CakeView extends SurfaceView {
             drawSquare(canvas, myCake.squareX, myCake.squareY);
         }
 
+
+        canvas.drawText(myCake.touchLoc, 1550,900,textPaint);
+
 //        drawCandle(canvas, cakeLeft + cakeWidth/3 - candleWidth/3, cakeTop);
 //
 //        //Draw a candle to the right
 //        drawCandle(canvas, cakeLeft + (2 * cakeWidth/3) - (2 * candleWidth/3), cakeTop);
+
+        float cVballoonX = getCakeModel().balloonX;
+        float cVballoonY = getCakeModel().balloonY;
+        if (getCakeModel().balloonDrawn) {
+            canvas.drawOval(cVballoonX - balloonWidthDiv2, cVballoonY - balloonHeightDiv2,
+                    cVballoonX + balloonWidthDiv2, cVballoonY + balloonHeightDiv2,
+                    cakePaint);
+            canvas.drawLine(cVballoonX, cVballoonY + balloonHeightDiv2,
+                    cVballoonX, cVballoonY + balloonHeightDiv2*2, candlePaint);
+        }
 
     }//onDraw
 
