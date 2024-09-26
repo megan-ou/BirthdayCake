@@ -16,6 +16,8 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint squareLTBtmR = new Paint();
+    Paint squareRTBtmL = new Paint();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -33,6 +35,8 @@ public class CakeView extends SurfaceView {
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
+    public static final float squareHeight = 50.0f;
+    public static final float squareWidth = 55.0f;
 
     //private instance variable of CakeModel
     private CakeModel myCake;
@@ -61,6 +65,11 @@ public class CakeView extends SurfaceView {
         innerFlamePaint.setStyle(Paint.Style.FILL);
         wickPaint.setColor(Color.BLACK);
         wickPaint.setStyle(Paint.Style.FILL);
+        squareLTBtmR.setColor(Color.GREEN);
+        squareLTBtmR.setStyle(Paint.Style.FILL);
+        squareRTBtmL.setColor(Color.RED);
+        squareRTBtmL.setStyle(Paint.Style.FILL);
+
 
         setBackgroundColor(Color.WHITE);  //better than black default
 
@@ -103,6 +112,21 @@ public class CakeView extends SurfaceView {
         }
     }
 
+    public void drawSquare(Canvas canvas, float xLoc, float yLoc) {
+        //left, top, right, bottom, paint
+
+        //Draw top left rectangle
+        canvas.drawRect(xLoc - squareWidth/2, yLoc - squareHeight/2, xLoc,
+                yLoc, squareLTBtmR);
+        //Draw bottom left rectangle
+        canvas.drawRect(xLoc - squareWidth/2, yLoc, xLoc, yLoc + squareHeight/2, squareRTBtmL);
+        //Draw bottom right rectangle
+        canvas.drawRect(xLoc, yLoc - squareHeight/2, xLoc + squareWidth/2, yLoc + squareHeight/2, squareLTBtmR);
+        //Draw top right rectangle
+        canvas.drawRect(xLoc, yLoc - squareHeight/2, xLoc + squareWidth/2, yLoc, squareRTBtmL);
+
+    }
+
     /**
      * onDraw is like "paint" in a regular Java program.  While a Canvas is
      * conceptually similar to a Graphics in javax.swing, the implementation has
@@ -140,6 +164,11 @@ public class CakeView extends SurfaceView {
         for (int i = 1; i <= myCake.numCandles; i++) {
             drawCandle(canvas, cakeLeft + i * cakeWidth/ (myCake.numCandles + 1)
                     - i * candleWidth/ (myCake.numCandles + 1), cakeTop);
+        }
+
+        //Draw the checkerboard square drawing if user touches the screen
+        if(myCake.touched) {
+            drawSquare(canvas, myCake.squareX, myCake.squareY);
         }
 
 //        drawCandle(canvas, cakeLeft + cakeWidth/3 - candleWidth/3, cakeTop);
