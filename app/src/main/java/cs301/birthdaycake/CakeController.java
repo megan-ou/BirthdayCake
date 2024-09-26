@@ -12,10 +12,15 @@ public class CakeController implements OnClickListener, CompoundButton.OnChecked
         SeekBar.OnSeekBarChangeListener {
     private CakeView cakeView;
     private CakeModel cakeModel;
+    private float xVal;
+    private float yVal;
 
     public CakeController(CakeView cv) {
         cakeView =  cv;
         cakeModel = cakeView.getCakeModel();
+
+        xVal = 0;
+        yVal = 0;
 
     }
 
@@ -66,10 +71,13 @@ public class CakeController implements OnClickListener, CompoundButton.OnChecked
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
+        xVal = motionEvent.getX();
+        yVal = motionEvent.getY();
         cakeModel.balloonX = motionEvent.getX();
         cakeModel.balloonY = motionEvent.getY();
         cakeModel.balloonDrawn = true;
+        cakeModel.touchLoc = "" + xVal + ", " + yVal;
+
         cakeView.invalidate();
         return true;
     }
